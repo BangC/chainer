@@ -70,7 +70,7 @@ endif()
 # Misc.
 if(CUDNN_INCLUDE_DIR AND CUDNN_LIBRARY)
   # Find cudnn.h and determine CUDNN_VERSION
-  file(READ ${CUDNN_INCLUDE_DIR}/cudnn.h CUDNN_HEADER_CONTENTS)
+  file(READ ${CUDNN_INCLUDE_DIR}/cudnn_version.h CUDNN_HEADER_CONTENTS)
     string(REGEX MATCH "define CUDNN_MAJOR * +([0-9]+)"
                  CUDNN_VERSION_MAJOR "${CUDNN_HEADER_CONTENTS}")
     string(REGEX REPLACE "define CUDNN_MAJOR * +([0-9]+)" "\\1"
