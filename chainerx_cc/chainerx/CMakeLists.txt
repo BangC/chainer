@@ -66,6 +66,7 @@ install(FILES
     strides.h
     thread_local_state.h
     util.h
+	platform/windows.h
     DESTINATION include/chainerx
     )
 
@@ -100,6 +101,7 @@ set(chainerx_srcs
     strides.cc
     thread_local_state.cc
     util.cc
+	platform/windows.cc
     )
 
 add_library(chainerx_base STATIC ${chainerx_srcs})

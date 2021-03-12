@@ -20,7 +20,6 @@ set(srcs
     strides.cc
     testing/device_buffer.cc
     testing/testing_module.cc
-	platform/windows.cc
     )
 
 set(module_name _core.so)
