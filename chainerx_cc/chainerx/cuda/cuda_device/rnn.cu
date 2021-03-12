@@ -245,7 +245,7 @@ public:
         cudnnSetDropoutDescriptor(dropout_desc, device_internals.cudnn_handle().handle(), 0, states, state_size, seed);
         cudnnCreateRNNDescriptor(&rnn_desc);
         device_internals.cudnn_handle().Call(
-                cudnnSetRNNDescriptor,
+                cudnnSetRNNDescriptor_v6,
                 rnn_desc,
                 hidden_dim,
                 num_layers,

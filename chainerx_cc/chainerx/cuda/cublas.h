@@ -31,10 +31,16 @@ public:
     }
 
 private:
+public:
     cublasHandle_t handle();
 
+private:
     int device_index_;
+
+public:
     std::mutex handle_mutex_{};
+
+private:
     cublasHandle_t handle_{};
 };
 
