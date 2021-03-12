@@ -127,26 +127,33 @@ public:
 
             cuda_internal::DeviceInternals& device_internals = cuda_internal::GetDeviceInternals(static_cast<CudaDevice&>(device));
 
-            device_internals.cublas_handle().Call(
-                    cublasGemmEx,
-                    b_cast_layout.trans,
-                    a_cast_layout.trans,
-                    n,
-                    m,
-                    k,
-                    &one,
-                    internal::GetRawOffsetData(b_cast_config),
-                    data_type,
-                    b_cast_layout.ld,
-                    internal::GetRawOffsetData(a_cast_config),
-                    data_type,
-                    a_cast_layout.ld,
-                    &zero,
-                    internal::GetRawOffsetData(out_contiguous),
-                    data_type,
-                    n,
-                    compute_type,
-                    CUBLAS_GEMM_DEFAULT_TENSOR_OP);
+			auto& dummy = device_internals.cublas_handle();
+            {
+				std::lock_guard<std::mutex> lock{dummy.handle_mutex_};
+                CheckCublasError(
+					cublasGemmEx(
+                        dummy.handle(),
+                        b_cast_layout.trans,
+                        a_cast_layout.trans,
+                        n,
+                        m,
+                        k,
+                        &one,
+                        internal::GetRawOffsetData(b_cast_config),
+                        data_type,
+                        b_cast_layout.ld,
+                        internal::GetRawOffsetData(a_cast_config),
+                        data_type,
+                        a_cast_layout.ld,
+                        &zero,
+                        internal::GetRawOffsetData(out_contiguous),
+                        data_type,
+                        n,
+                        compute_type,
+                        CUBLAS_GEMM_DEFAULT_TENSOR_OP
+					)
+				);
+			}
         };
 
         switch (out.dtype()) {
